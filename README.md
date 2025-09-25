@@ -43,92 +43,149 @@ pip install matplotlib
 
 Agora, vamos direto para a criação das visualizações. Cada exemplo abaixo é um script completo e autônomo.
 
-#### **A. Gráfico de Linhas - Analisando Tendências**
+Excelente observação\! Você está certíssimo, eu realmente simplifiquei os comentários na última versão e não deveria ter feito isso. Peço desculpas.
+
+A minha intenção foi seguir sua orientação de simplificar o código ao máximo, tirando o Pandas, e no processo acabei enxugando os comentários também. Mas você tem toda a razão: para um material didático, especialmente para quem não conhece a biblioteca, ter cada linha comentada é muito mais importante.
+
+Vamos corrigir isso agora. Aqui estão os mesmos três blocos de código para o `README.md`, agora com **comentários detalhados em cada linha de plotagem**, explicando o que cada método e parâmetro faz.
+
+Pode substituir os blocos de código anteriores por estes.
+
+-----
+
+### **A. Gráfico de Linhas - Analisando Tendências**
 
 **Pergunta:** Em nossa amostra, existe uma tendência na predisposição genética ao diabetes conforme a idade das pacientes aumenta?
 
 ```python
+# Importa a biblioteca principal de plotagem e a apelida de 'plt'
 import matplotlib.pyplot as plt
 
 # --- Dados ---
+# Definimos os dados diretamente em listas Python para focar no Matplotlib.
 idades = [21, 26, 30, 31, 32, 33, 50, 51, 53, 59]
 pedigree = [0.167, 0.248, 0.201, 0.351, 0.672, 2.288, 0.627, 0.587, 0.158, 0.398]
 
 # --- Visualização ---
+# plt.figure() cria a "tela" (figura) onde vamos desenhar o gráfico.
+# figsize=(10, 6) define o tamanho da figura em polegadas (10 de largura, 6 de altura).
 plt.figure(figsize=(10, 6))
 
-# Adicionamos o parâmetro 'label' para identificar esta linha de dados.
+# plt.plot() é o comando que desenha o gráfico de linhas.
+# O primeiro argumento (idades) é o eixo X, o segundo (pedigree) é o eixo Y.
+# marker='o'       -> Adiciona um marcador de círculo em cada ponto de dado.
+# linestyle='--'   -> Define o estilo da linha como tracejada.
+# color='purple'   -> Define a cor da linha e dos marcadores.
+# label='...'      -> Define o texto que aparecerá na legenda do gráfico.
 plt.plot(idades, pedigree, marker='o', linestyle='--', color='purple', label='Predisposição Genética')
 
+# plt.title() define o título principal do gráfico.
 plt.title('Tendência da Predisposição Genética por Idade (Amostra)', fontsize=16)
+
+# plt.xlabel() e plt.ylabel() definem os rótulos dos eixos X e Y, respectivamente.
 plt.xlabel('Idade (anos)', fontsize=12)
 plt.ylabel('Diabetes Pedigree Function', fontsize=12)
+
+# plt.grid(True) adiciona uma grade ao fundo para facilitar a leitura dos valores.
 plt.grid(True, alpha=0.5)
 
-# O comando plt.legend() lê o 'label' que definimos no plt.plot() e exibe a legenda.
+# plt.legend() ativa a exibição da legenda, usando os 'labels' definidos nos plots.
 plt.legend()
 
+# plt.savefig() salva a figura gerada como um arquivo de imagem.
 plt.savefig('grafico_de_linhas_idade_pedigree.png')
+
+# plt.show() abre uma janela para exibir o gráfico na tela.
 plt.show()
 ```
 
-#### **B. Gráfico de Pizza - Visualizando Proporções**
+### **B. Gráfico de Pizza - Visualizando Proporções**
 
 **Pergunta:** Qual a proporção de pacientes com e sem diabetes em nossa amostra?
 
 ```python
+# Importa a biblioteca de plotagem
 import matplotlib.pyplot as plt
 
 # --- Dados ---
+# labels -> Rótulos de texto para cada "fatia" da pizza.
 labels = ['Sem Diabetes', 'Com Diabetes']
+# sizes -> Os valores numéricos de cada fatia. Matplotlib calcula a porcentagem automaticamente.
 sizes = [12, 8]
+# colors -> Uma lista de cores para cada fatia.
 colors = ['#66b3ff', '#ff9999']
+# explode -> Afasta uma fatia do centro para dar destaque. O valor indica a fração do raio.
 explode = (0.05, 0)
 
 # --- Visualização ---
+# Cria a "tela" para o nosso gráfico.
 plt.figure(figsize=(8, 8))
 
-# O gráfico de pizza já usa o parâmetro 'labels' para criar as legendas diretamente nas fatias.
-# Uma legenda separada com plt.legend() seria redundante, mas poderia ser adicionada se necessário.
+# plt.pie() é o comando que desenha o gráfico de pizza.
+# sizes     -> Passa os valores de cada fatia.
+# explode   -> Aplica o destaque que definimos.
+# labels    -> Define os nomes de cada fatia.
+# colors    -> Define as cores de cada fatia.
+# autopct   -> Formata como o texto da porcentagem deve aparecer. '%1.1f%%' significa um número float com 1 casa decimal.
+# shadow    -> Adiciona uma sombra para um leve efeito de profundidade.
+# startangle-> Define o ângulo inicial da primeira fatia (gira o gráfico).
 plt.pie(sizes, explode=explode, labels=labels, colors=colors,
         autopct='%1.1f%%', shadow=True, startangle=140)
 
+# Adiciona o título principal ao gráfico.
 plt.title('Proporção de Diagnósticos de Diabetes (Amostra)', fontsize=16)
+
+# plt.axis('equal') garante que a pizza seja um círculo perfeito.
 plt.axis('equal')
 
+# Salva e exibe o gráfico.
 plt.savefig('grafico_de_pizza_diagnostico.png')
 plt.show()
 ```
 
-#### **C. Gráfico de Barras - Comparando Categorias**
+### **C. Gráfico de Barras - Comparando Categorias**
 
 **Pergunta:** Qual a média de glicose para pacientes com e sem diabetes em nossa amostra?
 
 ```python
+# Importa a biblioteca de plotagem
 import matplotlib.pyplot as plt
 
 # --- Dados ---
+# categorias -> Rótulos de texto para cada barra no eixo X.
 categorias = ['Sem Diabetes', 'Com Diabetes']
+# media_glicose -> Lista com a altura de cada barra, correspondendo a cada categoria.
 media_glicose = [99.7, 155.0]
 
 # --- Visualização ---
+# Cria a "tela" para o gráfico.
 plt.figure(figsize=(8, 6))
 
-# Adicionamos o parâmetro 'label' a cada barra ou conjunto de barras.
+# plt.bar() é o comando que desenha o gráfico de barras.
+# categorias    -> Os rótulos do eixo X.
+# media_glicose -> As alturas das barras no eixo Y.
+# color         -> Uma lista de cores, uma para cada barra.
+# edgecolor     -> Cor da borda das barras para um melhor acabamento visual.
+# label         -> Texto para a legenda do gráfico.
 plt.bar(categorias, media_glicose, color=['skyblue', 'salmon'], edgecolor='black', label='Média de Glicose')
 
+# Adiciona o título principal ao gráfico.
 plt.title('Média de Glicose por Diagnóstico (Amostra)', fontsize=16)
+
+# Adiciona os rótulos dos eixos.
 plt.xlabel('Diagnóstico', fontsize=12)
 plt.ylabel('Nível Médio de Glicose', fontsize=12)
+
+# Adiciona uma grade horizontal tracejada para facilitar a comparação visual dos valores.
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 
-# O comando plt.legend() exibe a legenda que definimos no plt.bar().
+# Ativa a exibição da legenda.
 plt.legend()
 
+# Salva e exibe o gráfico.
 plt.savefig('barras_media_glicose.png')
 plt.show()
 ```
-
 -----
 
 ### ✨ Personalizando seus Gráficos (Estilos e Cores)
